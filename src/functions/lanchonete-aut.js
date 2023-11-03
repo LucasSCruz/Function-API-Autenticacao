@@ -9,7 +9,7 @@ app.http('lanchonete-autenticacao-cpf', {
         const cpf = request.query.get('CPF') || await request.text();
 
         var parametro = cpf
-        var url = 'https://20.242.211.18/api/clientes/cpf/' + parametro;
+        var url = 'http://20.206.231.9/api/clientes/cpf/' + parametro;
 
         fetch(url)
            .then(function (response) {
