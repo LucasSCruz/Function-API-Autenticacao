@@ -1,4 +1,6 @@
 const { app } = require('@azure/functions');
+const jwt = require('jsonwebtoken');
+const secretKey = 'ETSF2dSZAv';
 
 app.http('lanchonete-autenticacao-cpf', {
     methods: ['POST'],
@@ -10,13 +12,23 @@ app.http('lanchonete-autenticacao-cpf', {
 
         var parametro = cpf
         var url = 'http://20.206.231.9/api/clientes/cpf/' + parametro;
-
+          
+          
         fetch(url)
            .then(function (response) {
               if (response.status === 200) {
-                   result =  response.json(); 
+
+                const payload = {
+                    user_id: response.body.cpf,
+                    username: response.body.username,
+                    role: 'user',
+                  };
+                  
+                  const token = jwt.sign(payload, secretKey, { expiresIn: '20min' });
+
+                   result =  token;   
                 } else {  
-                    result = 'Erro na requisição GET';
+                    result = '401 Unauthorized';
                 }
             })
 
