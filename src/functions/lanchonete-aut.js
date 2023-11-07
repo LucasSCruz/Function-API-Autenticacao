@@ -32,6 +32,6 @@ app.http('lanchonete-autenticacao-cpf', {
                 }
             })
 
-        return { body: `Usuário encontrado!, ${result}!` };
+        return { body: `${result}!` };
     }
 });
