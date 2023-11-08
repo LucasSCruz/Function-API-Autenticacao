@@ -11,27 +11,32 @@ app.http('lanchonete-autenticacao-cpf', {
         const cpf = request.query.get('CPF') || await request.text();
 
         var parametro = cpf
-        var url = 'http://20.206.231.9/api/clientes/cpf/' + parametro;
-          
-          
+        var url = 'http://20.206.231.9/api/clientes/cpf/' + parametro.toString();
+
+
         fetch(url)
-           .then(function (response) {
-              if (response.status === 200) {
+            .then( function (response) {
+                if (response.status === 200) {
+                    var repo = response.body;
 
-                const payload = {
-                    user_id: response.body.cpf,
-                    username: response.body.username,
-                    role: 'user',
-                  };
-                  
-                  const token = jwt.sign(payload, secretKey, { expiresIn: '20min' });
+                   // const cpf = response.body["cpf"];
+                   // const nome = response.body["nome"];
 
-                   result =  token;   
-                } else {  
+                    const payload = {
+                        user_id: cpf,
+                        role: 'user',
+                    };
+
+                    const token = jwt.sign(payload, secretKey, { expiresIn: '20m' });
+
+                    result = JSON.stringify(token);
+
+                } else {
                     result = '401 Unauthorized';
                 }
             })
 
-        return { body: `${result}!` };
+
+        return { body: result };
     }
 });
