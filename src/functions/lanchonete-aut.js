@@ -1,6 +1,6 @@
 const { app } = require('@azure/functions');
 const jwt = require('jsonwebtoken');
-const secretKey = 'ETSF2dSZAv';
+const secretKey = 'SGVsbG8gd29ybGQhIQ==';
 
 app.http('lanchonete-autenticacao-cpf', {
     methods: ['POST'],
@@ -27,7 +27,7 @@ app.http('lanchonete-autenticacao-cpf', {
                         role: 'user',
                     };
 
-                    const token = jwt.sign(payload, secretKey, { expiresIn: '20m' });
+                    const token = jwt.sign(payload, secretKey, { expiresIn: '1d' });
 
                     result = JSON.stringify(token);
 
